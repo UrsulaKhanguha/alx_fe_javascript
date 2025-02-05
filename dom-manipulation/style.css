@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background: #bbc6fa;
+}
+.quote-box{
+   background:#ffff;
+   width: 700px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 90%;
+   transform: translate(-50%, -50%);
+   padding: 40px;
+   border-radius: 10px;
+   text-align: center;
+   box-shadow: 0 10px 20px 0px rgba(0,0,0,0,0.15);
+}
+.quote-box h1{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-bottom: 40px;
+    font-size: 40px;
+}
+.quote-box button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+}
+#quoteDisplay{
+    font-family: monospace;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+/* .newQuoteText{
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+} */
+
+#newQuoteText{
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+    }
+#newQuoteCategory{
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: bold;
+}
