@@ -61,11 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   else {
     showRandomQuote()
   }
-    const exportButton = document.createElement("button")
-    exportButton.textContent = "Export Quote";
-    exportButton.id = "exportQuotes";
-    exportButton.style.marginTop = "10px";
-    document.body.appendChild(exportButton);
+  
     document.getElementById("exportQuotes").addEventListener("click", exportQuotes);
   
   });
