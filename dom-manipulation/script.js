@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     if (newQuotes.length > 0) {
       localQuotes = [...localQuotes, ...newQuotes];
       localStorage.setItem("quotes", JSON.stringify(localQuotes));
-      displayNotification("Quoted synced with server.");
+      displayNotification("Quoted synced with server!");
       quotes = localQuotes; // Update in-memory quotes array
       populateCategories(); // Refresh dropdown
     }
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     });
       
     localStorage.setItem("quotes", JSON.stringify(localQuotes));
-    displayNotification("Quotes synced with server.");
+    displayNotification("Quotes synced with server!");
     quotes = localQuotes; // Update in-memory quotes array
     populateCategories(); // Refresh dropdown
   }
