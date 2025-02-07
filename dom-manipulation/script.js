@@ -145,15 +145,72 @@ document.addEventListener("DOMContentLoaded", () =>{
     filterQuotes(); //apply last selcted filter
 })
 
-// Function to fetch quotes from a mock server (JSONPlaceholder)
+ // Function to display UI notifications
+  function displayNotification(message) {
+    const notification = document.createElement("div");
+    notification.textContent = message;
+    notification.style.position = "fixed";
+    notification.style.bottom = "20px";
+    notification.style.right = "20px";
+    notification.style.background = "green";
+    notification.style.color = "white";
+    notification.style.padding = "10px";
+    notification.style.borderRadius = "5px";
+    document.body.appendChild(notification);
+  
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 3000);
+  }
+
+ // Function to sync quotes with local storage
+  function syncQuotesWithLocalStorage(serverQuotes) {
+    let localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+  
+    // Identify new quotes
+    const newQuotes = serverQuotes.filter(sq => !localQuotes.some(lq => lq.id === sq.id));
+  
+    if (newQuotes.length > 0) {
+      localQuotes = [...localQuotes, ...newQuotes];
+      localStorage.setItem("quotes", JSON.stringify(localQuotes));
+      displayNotification("Quoted synced with server.");
+      quotes = localQuotes; // Update in-memory quotes array
+      populateCategories(); // Refresh dropdown
+    }
+  }
+  
+
+  // Function to resolve conflicts (server takes precedence)
+  function resolveConflicts(serverQuotes) {
+    let localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+  
+    serverQuotes.forEach(serverQuote => {
+      const localQuoteIndex = localQuotes.findIndex(lq => lq.id === serverQuote.id);
+  
+      if (localQuoteIndex !== -1) {
+        // Update local quote with the server version
+        localQuotes[localQuoteIndex] = serverQuote;
+      } else {
+        // Add new server quote
+        localQuotes.push(serverQuote);
+      }
+    });
+      
+    localStorage.setItem("quotes", JSON.stringify(localQuotes));
+    displayNotification("Quotes synced with server.");
+    quotes = localQuotes; // Update in-memory quotes array
+    populateCategories(); // Refresh dropdown
+  }
+  
+  // Function to fetch quotes from a mock server (JSONPlaceholder)
 async function fetchQuotesFromServer() {
     try {
           const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-            method: "POST", // 👈 POST request
+            method: "POST", //  POST request
             headers: {
-                "Content-Type": "application/json" // 👈 Specify JSON format
+                "Content-Type": "application/json" //  Specify JSON format
             },
-            body: JSON.stringify({ // 👈 Example data
+            body: JSON.stringify({ //  Example data
                 title: "New Inspirational Quote",
                 category: "Motivation",
                 userId: 1
@@ -175,63 +232,7 @@ async function fetchQuotesFromServer() {
       setTimeout(fetchQuotesFromServer, 5000); // Retry after 5 seconds
     }
   }
-  
-  // Function to sync quotes with local storage
-  function syncQuotesWithLocalStorage(serverQuotes) {
-    let localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
-  
-    // Identify new quotes
-    const newQuotes = serverQuotes.filter(sq => !localQuotes.some(lq => lq.id === sq.id));
-  
-    if (newQuotes.length > 0) {
-      localQuotes = [...localQuotes, ...newQuotes];
-      localStorage.setItem("quotes", JSON.stringify(localQuotes));
-      displayNotification("Quoted synced with server.");
-      quotes = localQuotes; // Update in-memory quotes array
-      populateCategories(); // Refresh dropdown
-    }
-  }
-  
-  // Function to resolve conflicts (server takes precedence)
-  function resolveConflicts(serverQuotes) {
-    let localQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
-  
-    serverQuotes.forEach(serverQuote => {
-      const localQuoteIndex = localQuotes.findIndex(lq => lq.id === serverQuote.id);
-  
-      if (localQuoteIndex !== -1) {
-        // Update local quote with the server version
-        localQuotes[localQuoteIndex] = serverQuote;
-      } else {
-        // Add new server quote
-        localQuotes.push(serverQuote);
-      }
-    });
-  
-    localStorage.setItem("quotes", JSON.stringify(localQuotes));
-    displayNotification("Quotes synced with server.");
-    quotes = localQuotes; // Update in-memory quotes array
-    populateCategories(); // Refresh dropdown
-  }
-  
-  // Function to display UI notifications
-  function displayNotification(message) {
-    const notification = document.createElement("div");
-    notification.textContent = message;
-    notification.style.position = "fixed";
-    notification.style.bottom = "20px";
-    notification.style.right = "20px";
-    notification.style.background = "green";
-    notification.style.color = "white";
-    notification.style.padding = "10px";
-    notification.style.borderRadius = "5px";
-    document.body.appendChild(notification);
-  
-    setTimeout(() => {
-      document.body.removeChild(notification);
-    }, 3000);
-  }
-  
+      
   // Run functions when the page loads
   document.addEventListener("DOMContentLoaded", () => {
     populateCategories(); // Populate category dropdown
