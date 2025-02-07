@@ -186,7 +186,7 @@ async function fetchQuotesFromServer() {
     if (newQuotes.length > 0) {
       localQuotes = [...localQuotes, ...newQuotes];
       localStorage.setItem("quotes", JSON.stringify(localQuotes));
-      displayNotification("New quotes have been added from the server.");
+      displayNotification("Quoted synced with server.");
       quotes = localQuotes; // Update in-memory quotes array
       populateCategories(); // Refresh dropdown
     }
@@ -209,7 +209,7 @@ async function fetchQuotesFromServer() {
     });
   
     localStorage.setItem("quotes", JSON.stringify(localQuotes));
-    displayNotification("Conflicts resolved: Server data has been synced.");
+    displayNotification("Quotes synced with server.");
     quotes = localQuotes; // Update in-memory quotes array
     populateCategories(); // Refresh dropdown
   }
