@@ -148,7 +148,17 @@ document.addEventListener("DOMContentLoaded", () =>{
 // Function to fetch quotes from a mock server (JSONPlaceholder)
 async function fetchQuotesFromServer() {
     try {
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+          const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST", // 👈 POST request
+            headers: {
+                "Content-Type": "application/json" // 👈 Specify JSON format
+            },
+            body: JSON.stringify({ // 👈 Example data
+                title: "New Inspirational Quote",
+                category: "Motivation",
+                userId: 1
+            })
+        });
       if (!response.ok) throw new Error("Failed to fetch quotes");
       const serverQuotes = await response.json();
   
