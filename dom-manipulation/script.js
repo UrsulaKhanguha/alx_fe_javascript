@@ -33,6 +33,33 @@ function showRandomQuote(){
     sessionStorage.setItem("lastViewedQuote", JSON.stringify(selectedQuote)); //store the last viewed quote in sessionStorage
 }
 
+function createAddQuoteForm() {
+  // Create form elements for adding a quote
+  const formContainer = document.createElement("div");
+
+  const quoteTextInput = document.createElement("input");
+  quoteTextInput.id = "newQuoteText";
+  quoteTextInput.type = "text";
+  quoteTextInput.placeholder = "Enter a new quote";
+
+  const quoteCategoryInput = document.createElement("input");
+  quoteCategoryInput.id = "newQuoteCategory";
+  quoteCategoryInput.type = "text";
+  quoteCategoryInput.placeholder = "Enter quote category";
+
+  const addButton = document.createElement("button");
+  addButton.textContent = "Add Quote";
+  addButton.onclick = addQuote; // Attach the addQuote function to the button click event
+
+  // Append form elements to the form container
+  formContainer.appendChild(quoteTextInput);
+  formContainer.appendChild(quoteCategoryInput);
+  formContainer.appendChild(addButton);
+
+  // Append the form container to the body or another element in your HTML
+  document.body.appendChild(formContainer);
+}
+
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
 //user can add their own quote
